@@ -46,7 +46,6 @@ export default async function handler(
     const process: any = youtubedl.exec(url, {
       format: format,
       output: "-",
-      newline: true,
     });
 
     // Stream video to client
