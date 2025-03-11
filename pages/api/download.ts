@@ -1,4 +1,3 @@
-// // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { NextApiRequest, NextApiResponse } from "next";
 import youtubedl from "youtube-dl-exec";
 
@@ -11,17 +10,43 @@ export default async function handler(
   }
 
   const url = req.query.url as string;
+  const fileExt = req.query.fileExt as FileExtension;
+
   if (!url) {
     return res.status(400).json({ error: "No URL provided" });
   }
 
+  if (!fileExt) {
+    return res.status(400).json({ error: "No file extension provided" });
+  }
+
+  let contentType = "";
+  let format = "bv+ba";
+  switch (fileExt) {
+    case "mp4":
+      contentType = "video/mp4";
+      break;
+    case "mp3":
+      contentType = "audio/mpeg";
+      format = "ba";
+      break;
+    default:
+      return res
+        .status(400)
+        .json({ error: "Unsupported file extension provided" });
+  }
+
   try {
-    res.setHeader("Content-Type", "video/mp4");
-    res.setHeader("Content-Disposition", 'attachment; filename="video.mp4"');
+    res.setHeader("Content-Type", contentType);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="untitled.${fileExt}"`
+    );
 
     const process: any = youtubedl.exec(url, {
-      format: "bv+ba",
+      format: format,
       output: "-",
+      newline: true,
     });
 
     // Stream video to client
@@ -39,3 +64,9 @@ export default async function handler(
     res.status(500).json({ error: error.message });
   }
 }
+
+export const config = {
+  api: {
+    responseLimit: false,
+  },
+};

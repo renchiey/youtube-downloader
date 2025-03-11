@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Youtube Downloader</title>
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider>
         <Layout>
