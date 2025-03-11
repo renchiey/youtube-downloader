@@ -9,9 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ThemeContext } from "@/contexts/ThemeContext";
 import { validateYoutubeUrl } from "@/lib/utils";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Home() {
   const [fileExt, setFileExt] = useState("");
