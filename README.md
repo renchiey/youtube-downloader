@@ -8,3 +8,4 @@ Can download in the following formats:
 Created with:
 - NextJS
 - TailwindCSS
+- Yt-dlp-exec
